@@ -64,4 +64,11 @@ class PostController extends Controller
             'content' => 'required|min:10'
         ]);
     }
+
+    public function getAdminDelete($id)
+    {
+        $post = Post::find($id);
+        $post->delete();
+        return redirect()->route('admin.index')->with('info', 'Post deleted!');
+    }
 }
