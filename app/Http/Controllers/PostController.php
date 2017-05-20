@@ -44,8 +44,11 @@ class PostController extends Controller
     public function postAdminCreate(Store $session, Request $request)
     {
         $this->validateFields($request);
-        $post = new Post();
-        $post->addPost($session, $request->input('title'), $request->input('content'));
+        $post = new Post([
+            'title' => $request->input('title'),
+            'content' => $request->input('content')
+        ]);
+        $post->save();
         return redirect()->route('admin.index')->with('info', 'Post created, Title is: ' . $request->input('title'));
     }
 
