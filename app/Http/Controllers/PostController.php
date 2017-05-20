@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Post;
 use Illuminate\Http\Request;
-use Illuminate\Session\Store;
 
 class PostController extends Controller
 {
@@ -48,11 +47,13 @@ class PostController extends Controller
         return redirect()->route('admin.index')->with('info', 'Post created, Title is: ' . $request->input('title'));
     }
 
-    public function postAdminUpdate(Store $session, Request $request)
+    public function postAdminUpdate(Request $request)
     {
         $this->validateFields($request);
-        $post = new Post();
-        $post->editPost($session, $request->input('id'), $request->input('title'), $request->input('content'));
+        $post = Post::find($request->input('id'));
+        $post->title = $request->input('title');
+        $post->content = $request->input('content');
+        $post->save();
         return redirect()->route('admin.index')->with('info', 'Post edited, new Title is: ' . $request->input('title'));
     }
 
