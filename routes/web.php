@@ -50,3 +50,4 @@ Route::group(['prefix' => 'admin'], function() {
         'as' => 'admin.update'
     ]);
 });
+Auth::routes();
